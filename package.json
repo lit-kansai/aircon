@@ -1,0 +1,55 @@
+{
+  "name": "aircon",
+  "version": "0.1.3",
+  "main": "index.js",
+  "repository": "https://github.com/mizucoffee/aircon.git",
+  "author": "Ritsuki Goto <develop@mizucoffee.net>",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build:mac": "electron-builder --mac --x64",
+    "build:win": "electron-builder --win --x64"
+  },
+  "dependencies": {
+    "electron-log": "^4.2.4",
+    "puppeteer": "^5.2.1"
+  },
+  "devDependencies": {
+    "electron": "^9.1.1",
+    "electron-builder": "^22.7.0"
+  },
+  "build": {
+    "appId": "net.mizucoffee.aircon",
+    "directories": {
+      "output": "dist"
+    },
+    "asar": false,
+    "files": [
+      "index.js",
+      "inject.js",
+      "index-cs.js",
+      "aircon.png",
+      "aircon_icon.png",
+      "aircon.icns",
+      "index.html",
+      "comment.html",
+      "startup.html",
+      "package.json",
+      "package-lock.json"
+    ],
+    "mac": {
+      "icon": "aircon.icns",
+      "target": [
+        "dmg"
+      ]
+    },
+    "win": {
+      "icon": "aircon_icon.png",
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
