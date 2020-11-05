@@ -14,6 +14,14 @@ const screens = [];
 const main = async () => {
 
   var electronScreen = electron.screen;
+
+  const globalShortcut = electron.globalShortcut;
+  globalShortcut.register('Cmd+Alt+,', function() {　　　　
+    screens.forEach(s => {
+      s.webContents.send('hide');
+    })
+  })
+
   var displays = electronScreen.getAllDisplays();
 
   displays.forEach(display => {
@@ -41,6 +49,8 @@ const main = async () => {
     screens.push(commentWindow)
   })
 
+  
+
   const win = new BrowserWindow({
     width: 800,
     height: 600,
@@ -63,6 +73,12 @@ const main = async () => {
     setTimeout(() => {
       event.sender.send('getComment')
     }, 10)
+  })
+
+  ipcMain.on("yt", async function (event, comment) {
+    if(comment) {
+      ipcMain.emit('ytComment', comment)
+    }
   })
 
 }

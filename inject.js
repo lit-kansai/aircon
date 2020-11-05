@@ -1,6 +1,7 @@
 const { ipcRenderer } = require("electron");
-
+const { LiveChat } = require('youtube-chat')
 const queue = [];
+let ytConnected = false;
 
 window.addEventListener('load', () => {
   console.log("load")
@@ -12,7 +13,16 @@ window.addEventListener('load', () => {
 })
 
 ipcRenderer.on("getComment", function () {
-  ipcRenderer.sendToHost("comment", queue.shift())
+  ipcRenderer.sendToHost("comment", queue.shift());
+})
+
+
+ipcRenderer.on("ytComment", function (event, comment) {
+  queue.push(comment);
+})
+
+ipcRenderer.on("connectYouTubeLive", function (event) {
+  ytConnected = true;
 })
 
 ipcRenderer.on("connectCommentScreen", function () {
@@ -26,9 +36,8 @@ ipcRenderer.on("connectCommentScreen", function () {
   const contentObserver = new MutationObserver((records) => {
     const msg = records[0].target.data.split("\n");
     const newLine = msg.length;
-    
-    queue.push(msg.slice(line).join("\n") + " by " + name)
-    console.log(msg.slice(line).join("\n") + " by " + name)
+  
+    queue.push(msg.slice(line).join("\n") + " by " + name + (ytConnected ? "@Zoom" : ""))
     
     line = newLine;
   });
@@ -38,8 +47,7 @@ ipcRenderer.on("connectCommentScreen", function () {
     const msg = addedChild.querySelector(".chat-item__chat-info-msg");
     name = addedChild.querySelector(".chat-item__chat-info-header--can-select")
       .innerText;
-    queue.push(msg.innerText + " by " + name)
-    console.log(msg.innerText + " by " + name)
+    queue.push(msg.innerText + " by " + name + (ytConnected ? "@Zoom" : ""))
     line = msg.innerText.split("\n").length;
     contentObserver.observe(msg.childNodes[0], { characterData: true });
   });

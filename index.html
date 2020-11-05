@@ -48,8 +48,13 @@
       }
     </style>
     <script>
+      // ショートカットキーでDisable
+      // YTChat
+      // LAN
       const { ipcRenderer } = require('electron')
+      const { LiveChat } = require('youtube-chat')
       let connected = false;
+      let ytconnected = false;
 
       window.addEventListener("load", () => {
         const wv = document.getElementById('wv');
@@ -91,6 +96,30 @@
         const wv = document.getElementById('wv');
         wv.send("connectCommentScreen")
       }
+
+      function connectYouTubeLive() {
+        if(ytconnected) return
+        if(!connected) {
+          return alert("先にZoomコメントと接続してください")
+        }
+        const ytid = document.getElementById('ytid');
+        if(!ytid.value) {
+          return alert("YouTube Live IDを入力してください")
+        }
+
+        const wv = document.getElementById('wv');
+        const liveChat = new LiveChat({liveId: ytid.value})
+        liveChat.on('start', (liveId) => {
+          wv.send('connectYouTubeLive')
+          ytconnected = true;
+          document.querySelector("#status").innerText = "yt接続済"
+        })
+        liveChat.on('comment', (comment) => {
+          wv.send("ytComment", comment.message[0].text + " by " + comment.author.name + "@YouTube")
+        })
+        liveChat.start()
+      }
+      
     </script>
   </head>
   <body>
@@ -98,6 +127,8 @@
       <img src="aircon.png">
       <div class="header-menu btn" onclick="connectCommentScreen()">コメント表示開始</div>
       <span class="header-menu red" id="status">未接続</span>
+      <input class="header-menu" type="text" placeholder="YouTube Live ID" id="ytid">
+      <div class="header-menu btn" onclick="connectYouTubeLive()">YouTube連携開始</div>
     </header>
     <webview
       id="wv"

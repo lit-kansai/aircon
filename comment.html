@@ -24,12 +24,20 @@
           0px 3px 0px #000000, -3px 0px 0px #000000, 0px -3px 0px #000000;
         position: absolute;
       }
+      .hide {
+        display: none;
+      }
     </style>
     <script>
       const { ipcRenderer } = require('electron')
 
       ipcRenderer.on('onComment',  (event, arg) => {
         createComment(arg)
+      })
+      ipcRenderer.on('hide',  (event, arg) => {
+        document.querySelectorAll('.comment').forEach(c => {
+          c.classList.toggle('hide')
+        })
       })
       function createComment(text) {
         const comments = document.querySelectorAll(".comment")
