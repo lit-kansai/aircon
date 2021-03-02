@@ -39,7 +39,7 @@ const main = async () => {
       alwaysOnTop: true,
       hasShadow: false,
     })
-    commentWindow.setAlwaysOnTop(true, 'pop-up-menu')
+    commentWindow.setAlwaysOnTop(true, 'screen-saver')
 
     commentWindow.loadFile('comment.html')
     commentWindow.setIgnoreMouseEvents(true)
