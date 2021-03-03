@@ -1,6 +1,6 @@
 {
   "name": "aircon",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "main": "index.js",
   "repository": "https://github.com/mizucoffee/aircon.git",
   "author": "Ritsuki Goto <develop@mizucoffee.net>",
@@ -14,7 +14,7 @@
     "electron-log": "^4.2.4",
     "puppeteer": "^5.2.1",
     "tslib": "^2.0.3",
-    "youtube-chat": "^1.1.0"
+    "youtube-chat": "IcedCoffeee/youtube-chat"
   },
   "devDependencies": {
     "electron": "^9.1.1",

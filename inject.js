@@ -8,12 +8,17 @@ window.addEventListener('load', () => {
   document.querySelector("#startBtn").addEventListener('click', () => {
     console.log("btn")
     const zid = document.getElementById("zid").value.replace(/\s/g, "");
-    ipcRenderer.sendToHost("start", zid);
+    const pwd = document.getElementById("pwd").value.replace(/\s/g, "");
+    ipcRenderer.sendToHost("start", zid, pwd);
   })
 })
 
 ipcRenderer.on("getComment", function () {
   ipcRenderer.sendToHost("comment", queue.shift());
+})
+
+ipcRenderer.on("initialize", function (event, data) {
+  initialize(`${data.id}`, `${data.pwd}`, 'Aircon')
 })
 
 

@@ -61,15 +61,21 @@
         wv.addEventListener('ipc-message', function(event) {
           switch(event.channel){
             case "start":
-              start(event.args[0])
+              start(event.args[0], event.args[1])
               break;
           }
         });
       })
 
-      function start(id) {
+      function start(id, pwd) {
         const wv = document.getElementById('wv');
-        wv.loadURL("https://us02web.zoom.us/wc/join/" + id)
+        wv.loadURL("https://affectionate-euler-702765.netlify.app/")
+        const loaded = function(){
+          wv.removeEventListener('did-finish-load', loaded)
+          wv.send("initialize", {id: id, pwd: pwd});
+        }
+        wv.addEventListener("did-finish-load", loaded);
+
         const cs = document.getElementById('cs');
         wv.addEventListener('ipc-message', function(event) {
           switch(event.channel){

@@ -1858,9 +1858,8 @@ yauzl@^2.10.0:
     buffer-crc32 "~0.2.3"
     fd-slicer "~1.1.0"
 
-youtube-chat@^1.1.0:
+youtube-chat@IcedCoffeee/youtube-chat:
   version "1.1.0"
-  resolved "https://registry.yarnpkg.com/youtube-chat/-/youtube-chat-1.1.0.tgz#ee51ccebe28e2ffa01510e801ca06e09ea759ff2"
-  integrity sha512-cf0shf4HB4h6kHzBKKWkKa2dCbiV+Xwt9BLyTrXWvRiwsuWfT0HITjhoe6BvpFaJRu6teCH+qbaIVvYa+tHgog==
+  resolved "https://codeload.github.com/IcedCoffeee/youtube-chat/tar.gz/3e20049c605e58a9de14c1df6d50cce7ca01d214"
   dependencies:
     axios "^0.19.2"
