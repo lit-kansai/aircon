@@ -37,26 +37,28 @@ ipcRenderer.on("connectCommentScreen", function () {
   if(!chatContainer) return alert("チャットを送信してください")
 
   let name = "";
-  let line = 1;
-  const contentObserver = new MutationObserver((records) => {
-    const msg = records[0].target.data.split("\n");
-    const newLine = msg.length;
-  
-    queue.push(msg.slice(line).join("\n") + " by " + name + (ytConnected ? "@Zoom" : ""))
-    
-    line = newLine;
+  // let line = 1;
+
+  const chatObserver =new MutationObserver((records) => {
+    records.forEach(r=> {
+      const addedNodes = [...r.addedNodes]
+      addedNodes.forEach(node => {
+        let msg = null
+        if([...node.classList].includes("chat-item__chat-info")){ // ユーザ切り替え
+          name = node.querySelector(".chat-item__sender").innerText
+          msg = node.querySelector(".chat-message-text-content").innerText
+        }
+        if([...node.classList].includes("chat-item__chat-info-msg")){ // 同ユーザ
+          msg = node.querySelector(".chat-message-text-content").innerText
+        }
+        if(msg == null) return
+
+        queue.push(msg + " by " + name + (ytConnected ? "@Zoom" : ""))
+      }) 
+    })
   });
-  const chatboxObserver = new MutationObserver((records) => {
-    if (contentObserver) contentObserver.disconnect();
-    const addedChild = records[0].addedNodes[0];
-    const msg = addedChild.querySelector(".chat-item__chat-info-msg");
-    name = addedChild.querySelector(".chat-item__chat-info-header--can-select")
-      .innerText;
-    queue.push(msg.innerText + " by " + name + (ytConnected ? "@Zoom" : ""))
-    line = msg.innerText.split("\n").length;
-    contentObserver.observe(msg.childNodes[0], { characterData: true });
-  });
-  chatboxObserver.observe(chatContainer, { childList: true });
+
+  chatObserver.observe(chatContainer, { childList: true, subtree: true });
 
   ipcRenderer.sendToHost("connected")
 });

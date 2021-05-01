@@ -1,8 +1,8 @@
 {
   "name": "aircon",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "main": "index.js",
-  "repository": "https://github.com/mizucoffee/aircon.git",
+  "repository": "https://github.com/lit-kansai/aircon.git",
   "author": "Ritsuki Goto <develop@mizucoffee.net>",
   "license": "MIT",
   "scripts": {
@@ -21,7 +21,7 @@
     "electron-builder": "^22.7.0"
   },
   "build": {
-    "appId": "net.mizucoffee.aircon",
+    "appId": "com.lit-kansai-mentors.aircon",
     "directories": {
       "output": "dist"
     },

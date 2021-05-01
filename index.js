@@ -2,6 +2,8 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const electron = require('electron');
 const log = require('electron-log');
 
+app.commandLine.appendSwitch('disable-renderer-backgrounding');
+
 process.on('uncaughtException', function(err) {
   log.error('electron:event:uncaughtException');
   log.error(err);
@@ -24,30 +26,30 @@ const main = async () => {
 
   var displays = electronScreen.getAllDisplays();
 
-  // displays.forEach(display => {
+  displays.forEach(display => {
   
     const commentWindow = new BrowserWindow({
-      x: 100,
-      y: 100,
-      width: 1280,
-      height: 720,
+      x: display.bounds.x,
+      y: display.bounds.y,
+      width: display.size.width,
+      height: display.size.height,
       webPreferences: {
         nodeIntegration: true
       },
-      // transparent: true,
-      // frame: false,
-      // alwaysOnTop: true,
+      transparent: true,
+      frame: false,
+      alwaysOnTop: true,
       hasShadow: false,
     })
-    // commentWindow.setAlwaysOnTop(true, 'screen-saver')
+    commentWindow.setAlwaysOnTop(true, 'screen-saver')
 
     commentWindow.loadFile('comment.html')
-    // commentWindow.setIgnoreMouseEvents(true)
+    commentWindow.setIgnoreMouseEvents(true)
     // commentWindow.maximize()
     // commentWindow.show()
 
     screens.push(commentWindow)
-  // })
+  })
 
   
 
