@@ -24,30 +24,30 @@ const main = async () => {
 
   var displays = electronScreen.getAllDisplays();
 
-  displays.forEach(display => {
+  // displays.forEach(display => {
   
     const commentWindow = new BrowserWindow({
-      x: display.bounds.x,
-      y: display.bounds.y,
-      width: display.size.width,
-      height: display.size.height,
+      x: 100,
+      y: 100,
+      width: 1280,
+      height: 720,
       webPreferences: {
         nodeIntegration: true
       },
-      transparent: true,
-      frame: false,
-      alwaysOnTop: true,
+      // transparent: true,
+      // frame: false,
+      // alwaysOnTop: true,
       hasShadow: false,
     })
-    commentWindow.setAlwaysOnTop(true, 'screen-saver')
+    // commentWindow.setAlwaysOnTop(true, 'screen-saver')
 
     commentWindow.loadFile('comment.html')
-    commentWindow.setIgnoreMouseEvents(true)
+    // commentWindow.setIgnoreMouseEvents(true)
     // commentWindow.maximize()
     // commentWindow.show()
 
     screens.push(commentWindow)
-  })
+  // })
 
   
 
